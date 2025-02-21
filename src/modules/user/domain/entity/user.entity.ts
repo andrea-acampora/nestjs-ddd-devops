@@ -1,5 +1,7 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
+import { UserRole } from '../value-object/user-role.enum';
+import { UserState } from '../value-object/user-state.enum';
 
 @Entity({
   tableName: 'Users',
@@ -15,10 +17,16 @@ export class User {
   password!: string;
 
   @Property({ nullable: true })
-  firstname?: string;
+  firstName?: string;
 
   @Property({ nullable: true })
-  lastname?: string;
+  lastName?: string;
+
+  @Enum({ items: () => UserRole })
+  role!: UserRole;
+
+  @Enum({ items: () => UserState })
+  state!: UserState;
 
   @Property({ onCreate: () => new Date() })
   createdAt: Date = new Date();
