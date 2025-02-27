@@ -15,11 +15,11 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix --no-ignore",
-    "test": "jest --passWithNoTests --coverage",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test": "jest --config test/config/jest-unit.config.ts --passWithNoTests --coverage",
+    "test:watch": "jest --config test/config/jest-unit.config.ts --watch",
+    "test:cov": "jest --config test/config/jest-unit.config.ts --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config test/e2e/jest-e2e.json --detectOpenHandles --forceExit",
+    "test:e2e": "jest --config test/config/jest-e2e.config.ts --detectOpenHandles --forceExit",
     "schema:update": "npm run build && npx mikro-orm schema:update -r --config src/config/database/mikro-orm.config.ts",
     "migrate:up": "npm run build && npx mikro-orm migration:up --config --config src/config/database/mikro-orm.config.ts",
     "migrate:down": "npm run build && npx mikro-orm migration:down --config --config src/config/database/mikro-orm.config.ts"
@@ -85,22 +85,5 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "test",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }

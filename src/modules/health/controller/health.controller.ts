@@ -28,7 +28,7 @@ export class HealthController {
       () => this.db.pingCheck('database'),
       () =>
         this.disk.checkStorage('storage', { path: '/', thresholdPercent: 0.8 }),
-      () => this.memory.checkHeap('memory', 500 * 1024 * 1024),
+      () => this.memory.checkHeap('memory', 750 * 1024 * 1024),
     ]);
   }
 }
