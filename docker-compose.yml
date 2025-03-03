@@ -7,11 +7,26 @@ services:
     ports:
       - "15432:5432/tcp"
     environment:
-      - POSTGRES_DB=db-test
+      - POSTGRES_DB=db-dev
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./postgresql_volume:/var/lib/postgresql/data:rw,Z
+    stdin_open: true
+    tty: true
+    networks:
+      - postgres
+
+  postgresql-test-e2e:
+    container_name: postgresql-test-e2e
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - "25432:5432/tcp"
+    environment:
+      - POSTGRES_DB=db-test-e2e
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     stdin_open: true
     tty: true
     networks:

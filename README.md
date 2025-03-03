@@ -53,7 +53,7 @@ In the following chapters you will find a description of the main choices, techn
     ```bash
      docker-compose up -d
      ```
-4. Provide a ```.env``` file with all required environment variables _(check out ```.env.dist``` example file)_
+4. Provide a ```.env``` and ```.env.test```  files with all required environment variables _(check out ```.env.dist``` example file)_
 5. Create and generate the database schema from your entities' metadata:
      ```bash
      npm run schema:update

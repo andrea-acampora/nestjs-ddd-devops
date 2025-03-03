@@ -1,3 +1,3 @@
-export class GetAuthUserByEmailQuery {
+export class GetUserByEmailQuery {
   constructor(readonly email: string) {}
 }

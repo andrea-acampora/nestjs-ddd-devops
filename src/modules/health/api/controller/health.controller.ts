@@ -7,6 +7,7 @@ import {
   MemoryHealthIndicator,
   MikroOrmHealthIndicator,
 } from '@nestjs/terminus';
+import { PublicApi } from '../../../../libs/decorator/auth.decorator';
 
 @Controller({
   path: 'health',
@@ -20,6 +21,7 @@ export class HealthController {
     private memory: MemoryHealthIndicator,
   ) {}
 
+  @PublicApi()
   @Get()
   @HealthCheck()
   check() {
