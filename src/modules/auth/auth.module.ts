@@ -1,16 +1,26 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard } from '@nestjs/throttler';
-import { JwtService } from './application/service/jwt.service';
+import { JwtService } from './infrastructure/jwt/jwt.service';
+import { AuthGuard } from './api/guard/auth.guard';
+import { AuthController } from './api/controller/auth.controller';
+import { JWT_AUTHENTICATION, LOGIN_USE_CASE } from './auth.tokens';
+import { LoginUseCase } from './application/use-case/login.use-case';
 
 @Module({
   imports: [],
-  controllers: [],
+  controllers: [AuthController],
   providers: [
-    JwtService,
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard,
+      useClass: AuthGuard,
+    },
+    {
+      provide: JWT_AUTHENTICATION,
+      useClass: JwtService,
+    },
+    {
+      provide: LOGIN_USE_CASE,
+      useClass: LoginUseCase,
     },
   ],
   exports: [],

@@ -37,6 +37,7 @@
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/cqrs": "^11.0.2",
     "@nestjs/event-emitter": "^3.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/platform-fastify": "^11.0.0",

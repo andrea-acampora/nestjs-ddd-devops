@@ -4,7 +4,7 @@ import { UserRole } from '../value-object/user-role.enum';
 import { UserState } from '../value-object/user-state.enum';
 
 @Entity({
-  tableName: 'Users',
+  tableName: 'users',
 })
 export class User {
   @PrimaryKey()
