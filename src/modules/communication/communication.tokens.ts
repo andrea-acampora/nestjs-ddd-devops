@@ -1,0 +1,1 @@
+export const EMAIL_SERVICE = 'EMAIL_SERVICE';

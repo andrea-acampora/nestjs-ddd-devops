@@ -12,6 +12,7 @@ import { HealthModule } from './modules/health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
+import { CommunicationModule } from './modules/communication/communication.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     HealthModule,
     UserModule,
     AuthModule,
+    CommunicationModule,
   ],
   controllers: [],
   providers: [

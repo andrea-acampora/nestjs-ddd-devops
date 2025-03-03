@@ -2,18 +2,13 @@ import { v4 } from 'uuid';
 
 export abstract class DomainEvent<T> {
   public readonly eventId: string;
-
   public readonly name: string;
-
   public readonly timeStamp: Date;
-
   public readonly payload: T;
-
   public readonly correlationId?: string;
-
   public readonly version: number;
 
-  constructor(
+  protected constructor(
     name: string,
     payload: T,
     options: { correlationId?: string; version?: number } = {},
