@@ -1,17 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../src/app.module';
 import { MikroORM } from '@mikro-orm/core';
+import { AppModule } from '../../../src/app.module';
 
 describe('Auth (E2E)', () => {
   let app: INestApplication;
+  let orm: MikroORM;
+
   const credentials = {
     email: 'test@example.com',
     password: 'Test1234!',
+    firstName: 'John',
+    lastName: 'Doe',
   };
 
-  beforeAll(async () => {
+  const initializeApp = async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -24,89 +28,107 @@ describe('Auth (E2E)', () => {
       }),
     );
     await app.init();
-    // Reset database before running tests
-    const orm = app.get<MikroORM>(MikroORM);
+    orm = app.get<MikroORM>(MikroORM);
+  };
+
+  const resetDatabase = async () => {
     await orm.getSchemaGenerator().refreshDatabase();
-    await orm.getSchemaGenerator().updateSchema();
+  };
+
+  beforeAll(async () => {
+    await initializeApp();
+  });
+
+  beforeEach(async () => {
+    await resetDatabase();
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  it('should fail to create a user with a wrong password', async () => {
+  const userFactory = (overrides = {}) => ({
+    ...credentials,
+    ...overrides,
+  });
+
+  it('should fail to create a user with a weak password', async () => {
     await request(app.getHttpServer())
       .post('/auth/signup')
-      .send({
-        email: 'wrong-credentials@example.com',
-        password: '1234',
-        firstName: 'John',
-        lastName: 'Doe',
-      })
+      .send(userFactory({ password: '1234' })) // Weak password
       .expect(HttpStatus.BAD_REQUEST);
   });
 
-  it('should sign up a user', async () => {
+  it('should sign up a user successfully', async () => {
     const response = await request(app.getHttpServer())
       .post('/auth/signup')
-      .send({
-        ...credentials,
-        firstName: 'John',
-        lastName: 'Doe',
-      })
+      .send(userFactory())
       .expect(HttpStatus.CREATED);
-    expect(response.body).toHaveProperty('token');
-    expect(response.body).toHaveProperty('refreshToken');
+    expect(response.body).toMatchObject({
+      token: expect.any(String),
+      expiresIn: expect.any(String),
+      refreshToken: expect.any(String),
+      refreshExpiresIn: expect.any(String),
+      user: {
+        id: expect.any(String),
+        email: credentials.email,
+        role: expect.any(Number),
+      },
+    });
   });
 
   it('should not allow duplicate signups', async () => {
     await request(app.getHttpServer())
       .post('/auth/signup')
-      .send({
-        ...credentials,
-        firstName: 'John',
-        lastName: 'Doe',
-      })
+      .send(userFactory())
+      .expect(HttpStatus.CREATED);
+    await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send(userFactory())
       .expect(HttpStatus.CONFLICT);
   });
 
-  it('should return 400 Bad Request  for invalid email', async () => {
+  it('should return 400 for invalid email format', async () => {
     await request(app.getHttpServer())
       .post('/auth/login')
-      .send({
-        email: 'wrong-email',
-        password: 'Test1234!',
-      })
+      .send(userFactory({ email: 'wrong-email' }))
       .expect(HttpStatus.BAD_REQUEST);
   });
 
-  it('should return 400 Bad Request  for invalid password', async () => {
+  it('should return 400 for incorrect password format', async () => {
     await request(app.getHttpServer())
       .post('/auth/login')
-      .send({
-        email: 'correct-email@example.com',
-        password: 'wrong',
-      })
+      .send(userFactory({ password: 'wrong' }))
       .expect(HttpStatus.BAD_REQUEST);
   });
 
-  it('should return 401 Unauthorized for invalid credentials', async () => {
+  it('should return 401 for invalid login credentials', async () => {
     await request(app.getHttpServer())
       .post('/auth/login')
-      .send({
-        email: 'email@example.com',
-        password: 'Test1234!',
-      })
+      .send({ email: credentials.email, password: credentials.password })
       .expect(HttpStatus.UNAUTHORIZED);
   });
 
   it('should login an existing user', async () => {
+    await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send(userFactory())
+      .expect(HttpStatus.CREATED);
+
     const response = await request(app.getHttpServer())
       .post('/auth/login')
-      .send(credentials)
+      .send({ email: credentials.email, password: credentials.password })
       .expect(HttpStatus.CREATED);
-    expect(response.body).toHaveProperty('token');
-    expect(response.body).toHaveProperty('refreshToken');
-    expect(response.body.user.email).toEqual(credentials.email);
+    expect(response.body).toMatchObject({
+      token: expect.any(String),
+      expiresIn: expect.any(String),
+      refreshToken: expect.any(String),
+      refreshExpiresIn: expect.any(String),
+      user: {
+        id: expect.any(String),
+        email: credentials.email,
+        role: expect.any(Number),
+      },
+    });
   });
 });
