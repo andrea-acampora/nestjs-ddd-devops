@@ -107,5 +107,6 @@ describe('Auth (E2E)', () => {
       .expect(HttpStatus.CREATED);
     expect(response.body).toHaveProperty('token');
     expect(response.body).toHaveProperty('refreshToken');
+    expect(response.body.user.email).toEqual(credentials.email);
   });
 });
