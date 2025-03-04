@@ -4,7 +4,6 @@ import {
   HealthCheck,
   HealthCheckService,
   HttpHealthIndicator,
-  MemoryHealthIndicator,
   MikroOrmHealthIndicator,
 } from '@nestjs/terminus';
 import { PublicApi } from '../../../../libs/decorator/auth.decorator';
@@ -18,7 +17,7 @@ export class HealthController {
     private http: HttpHealthIndicator,
     private db: MikroOrmHealthIndicator,
     private readonly disk: DiskHealthIndicator,
-    private memory: MemoryHealthIndicator,
+    // private memory: MemoryHealthIndicator,
   ) {}
 
   @PublicApi()
@@ -30,7 +29,7 @@ export class HealthController {
       () => this.db.pingCheck('database'),
       () =>
         this.disk.checkStorage('storage', { path: '/', thresholdPercent: 0.8 }),
-      () => this.memory.checkHeap('memory', 750 * 1024 * 1024),
+      //() => this.memory.checkHeap('memory', 750 * 1024 * 1024),
     ]);
   }
 }
