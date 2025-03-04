@@ -1,10 +1,15 @@
 import {
+  createParamDecorator,
   ExecutionContext,
   SetMetadata,
-  createParamDecorator,
 } from '@nestjs/common';
+import { ApiRole } from '../api/api-role.enum';
 
+export const AUTH_ROLES_KEY = 'AUTH_ROLES_KEY';
 export const IS_PUBLIC_API = 'IS_PUBLIC_API';
+
+export const AuthRoles = (...roles: ApiRole[]) =>
+  SetMetadata(AUTH_ROLES_KEY, roles);
 
 export const PublicApi = () => SetMetadata(IS_PUBLIC_API, true);
 

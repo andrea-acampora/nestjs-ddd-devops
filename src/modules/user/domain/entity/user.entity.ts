@@ -10,7 +10,7 @@ export class User {
   @PrimaryKey()
   id: string = v4();
 
-  @Property({ unique: true })
+  @Property({ unique: true, index: true })
   email!: string;
 
   @Property()

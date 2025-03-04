@@ -4,11 +4,10 @@ import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs';
 import { Injectable } from '@nestjs/common';
 import { AuthUser } from '../../api/presentation/dto/auth-user.dto';
 import { SignupBody } from '../../api/presentation/body/signup.body';
-import { CreateUserCommand } from '../command/create-user.command';
+import { RegisterUserCommand } from '../command/register-user.command';
 import { GetAuthUserByEmailQuery } from '../query/get-auth-user-by-email.query';
 import { User } from '../../../user/domain/entity/user.entity';
 import { CustomConflictException } from '../../../../libs/exceptions/custom-conflict.exception';
-import { genSalt, hash } from 'bcryptjs';
 import { CreatedUserEvent } from '../event/created-user.event';
 
 @Injectable()
@@ -24,20 +23,21 @@ export class SignupUseCase implements UseCase<SignupBody, Option<AuthUser>> {
       new GetAuthUserByEmailQuery(body.email),
     );
     if (isSome(found)) throw new CustomConflictException(found.value.email);
-    const hashedPassword = await hash(body.password, await genSalt());
-    const createdUser: Option<User> = await this.commandBus.execute(
-      new CreateUserCommand(
-        body.email,
-        hashedPassword,
-        body.firstName,
-        body.lastName,
+    return map(
+      await this.commandBus.execute(
+        new RegisterUserCommand(
+          body.email,
+          body.password,
+          body.firstName,
+          body.lastName,
+        ),
       ),
-    );
-    return map(createdUser, (user: User) => ({
-      id: user.id,
-      email: user.email,
-      role: user.role,
-    })).pipe((authUser: Option<AuthUser>) => {
+      (user: User) => ({
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      }),
+    ).pipe((authUser: Option<AuthUser>) => {
       if (isSome(authUser))
         this.eventBus.publish(new CreatedUserEvent(authUser.value));
       return authUser;

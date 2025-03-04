@@ -7,11 +7,14 @@ import {
 import { FastifyRequest } from 'fastify';
 import { JwtService } from '../../infrastructure/jwt/jwt.service';
 import { Reflector } from '@nestjs/core';
-import { AUTH_ROLES_KEY, JWT_AUTH_SERVICE } from '../../auth.tokens';
+import { JWT_AUTH_SERVICE } from '../../auth.tokens';
 import { isNone, none, Option, some } from 'effect/Option';
 import { QueryBus } from '@nestjs/cqrs';
 import { CheckAuthUserByIdQuery } from '../../application/query/check-auth-user-by-id.query';
-import { IS_PUBLIC_API } from '../../../../libs/decorator/auth.decorator';
+import {
+  AUTH_ROLES_KEY,
+  IS_PUBLIC_API,
+} from '../../../../libs/decorator/auth.decorator';
 import { ApiRole } from '../../../../libs/api/api-role.enum';
 
 @Injectable()
