@@ -3,8 +3,12 @@ import { fromNullable, isSome, Option } from 'effect/Option';
 import { UserRepository } from '../../domain/repository/user.repository.interface';
 import { UserState } from '../../domain/value-object/user-state.enum';
 import { CreateUserData } from '../../domain/data/create-user.data';
-import { EntityRepository } from '@mikro-orm/postgresql';
+import { EntityRepository, QueryBuilder } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { Collection } from '../../../../libs/api/collection.interface';
+import { UserParams } from '../../api/params/user.params';
+import { endOfDay, startOfDay } from 'date-fns';
+import { SortingType } from '../../../../libs/api/sorting-type.enum';
 
 export class UserRepositoryImpl implements UserRepository {
   constructor(
@@ -36,5 +40,52 @@ export class UserRepositoryImpl implements UserRepository {
     });
     await this.mikroOrmRepository.insert(entity);
     return fromNullable(entity);
+  }
+
+  async getAllUsers(params?: UserParams): Promise<Collection<User>> {
+    const queryBuilder = this.mikroOrmRepository.createQueryBuilder('user');
+    if (params) this.applyFilters(queryBuilder, params);
+    const [items, total] = await queryBuilder.getResultAndCount();
+    return {
+      items,
+      total,
+    };
+  }
+
+  private applyFilters(queryBuilder: QueryBuilder<User>, params: UserParams) {
+    const filters = [
+      params.filter?.id && {
+        id: params.filter.id,
+      },
+      params.filter?.firstName && {
+        firstName: {
+          $ilike: `%${params.filter.firstName}%`,
+        },
+      },
+      params.filter?.lastName && {
+        lastName: {
+          $ilike: `%${params.filter.lastName}%`,
+        },
+      },
+      params.filter?.email && {
+        email: {
+          $ilike: `%${params.filter.email}%`,
+        },
+      },
+      params.filter?.createdAt && {
+        createdAt: {
+          $gte: startOfDay(params.filter.createdAt),
+          $lte: endOfDay(params.filter.createdAt),
+        },
+      },
+    ];
+    filters.filter(Boolean).forEach((filter) => {
+      if (filter) queryBuilder.andWhere(filter);
+    });
+    if (params.sort?.createdAt)
+      queryBuilder.orderBy({ createdAt: params?.sort?.createdAt });
+    else queryBuilder.orderBy({ createdAt: SortingType.DESC });
+    queryBuilder.offset(params.offset);
+    queryBuilder.limit(params.limit);
   }
 }

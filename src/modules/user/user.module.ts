@@ -9,6 +9,7 @@ import { RegisterUserHandler } from './application/handler/command/register-user
 import { UserController } from './api/controller/user.controller';
 import { CreateUserUseCase } from './application/use-case/create-user.use-case';
 import { CreateUserHandler } from './application/handler/command/create-user.handler';
+import { GetAllUsersHandler } from './application/handler/query/get-all-users.handler';
 
 @Module({
   imports: [MikroOrmModule.forFeature([User])],
@@ -16,6 +17,7 @@ import { CreateUserHandler } from './application/handler/command/create-user.han
   providers: [
     RegisterUserHandler,
     CreateUserHandler,
+    GetAllUsersHandler,
     GetAuthUserByEmailHandler,
     CheckAuthUserByIdHandler,
     {
