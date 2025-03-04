@@ -1,12 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { MikroORM } from '@mikro-orm/core';
-import { AppModule } from '../../../src/app.module';
+import {
+  clearDatabase,
+  initializeApp,
+  resetDatabase,
+} from '../util/setup-e2e-test.util';
 
 describe('Auth (E2E)', () => {
   let app: INestApplication;
   let orm: MikroORM;
+
+  beforeAll(async () => {
+    ({ app, orm } = await initializeApp());
+    await resetDatabase(orm);
+  });
+
+  afterEach(async () => {
+    await clearDatabase(orm);
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
 
   const credentials = {
     email: 'test@example.com',
@@ -14,38 +30,6 @@ describe('Auth (E2E)', () => {
     firstName: 'John',
     lastName: 'Doe',
   };
-
-  const initializeApp = async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-    app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    );
-    await app.init();
-    orm = app.get<MikroORM>(MikroORM);
-  };
-
-  const resetDatabase = async () => {
-    await orm.getSchemaGenerator().refreshDatabase();
-  };
-
-  beforeAll(async () => {
-    await initializeApp();
-  });
-
-  beforeEach(async () => {
-    await resetDatabase();
-  });
-
-  afterAll(async () => {
-    await app.close();
-  });
 
   const userFactory = (overrides = {}) => ({
     ...credentials,

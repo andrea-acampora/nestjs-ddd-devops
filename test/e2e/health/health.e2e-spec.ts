@@ -1,17 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../src/app.module';
+import { MikroORM } from '@mikro-orm/core';
+import { initializeApp, resetDatabase } from '../util/setup-e2e-test.util';
 
 describe('HealthCheck (E2E)', () => {
   let app: INestApplication;
+  let orm: MikroORM;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-    app = moduleFixture.createNestApplication();
-    await app.init();
+  beforeAll(async () => {
+    ({ app, orm } = await initializeApp());
+    await resetDatabase(orm);
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   it('should always return 200', () => {
