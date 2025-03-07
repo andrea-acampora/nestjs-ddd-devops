@@ -18,6 +18,7 @@ import {
 } from '../../auth.tokens';
 import { UseCase } from '../../../../libs/ddd/use-case.interface';
 import { AuthUser } from '../presentation/dto/auth-user.dto';
+import { RefreshTokenBody } from '../presentation/body/refresh-token.body';
 
 @Controller('auth')
 export class AuthController {
@@ -50,5 +51,11 @@ export class AuthController {
         () => new UnauthorizedException('Signup Error!'),
       ),
     );
+  }
+
+  @PublicApi()
+  @Post('/token/refresh')
+  async refreshToken(@Body() body: RefreshTokenBody) {
+    return this.jwtAuth.generateJwtUserFromRefresh(body.token);
   }
 }
