@@ -18,11 +18,11 @@ export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery> {
     return {
       items: users.items.map(
         (user): UserDto => ({
-          email: user.email,
+          email: user.props.email,
           id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          createdAt: user.createdAt,
+          firstName: user.props.firstName,
+          lastName: user.props.lastName,
+          createdAt: user.props.createdAt,
         }),
       ),
       total: users.total,

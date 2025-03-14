@@ -3,8 +3,8 @@ import { GetAuthUserByEmailQuery } from '../../../../auth/application/query/get-
 import { UserRepository } from '../../../domain/repository/user.repository.interface';
 import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../../user.tokens';
-import { User } from '../../../domain/entity/user.entity';
 import { Option } from 'effect/Option';
+import { User } from '../../../domain/entity/user.entity';
 
 @QueryHandler(GetAuthUserByEmailQuery)
 export class GetAuthUserByEmailHandler

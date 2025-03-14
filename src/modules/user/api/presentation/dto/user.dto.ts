@@ -3,5 +3,5 @@ export interface UserDto {
   firstName?: string;
   lastName?: string;
   email: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
