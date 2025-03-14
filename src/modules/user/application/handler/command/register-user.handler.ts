@@ -3,10 +3,10 @@ import { RegisterUserCommand } from '../../../../auth/application/command/regist
 import { CREATE_USER_USE_CASE } from '../../../user.tokens';
 import { Inject } from '@nestjs/common';
 import { Option } from 'effect/Option';
-import { User } from '../../../domain/entity/user.entity';
 import { UserState } from '../../../domain/value-object/user-state.enum';
 import { CreateUserUseCase } from '../../use-case/create-user.use-case';
 import { UserRole } from '../../../domain/value-object/user-role.enum';
+import { User } from '../../../domain/entity/user.entity';
 
 @CommandHandler(RegisterUserCommand)
 export class RegisterUserHandler
