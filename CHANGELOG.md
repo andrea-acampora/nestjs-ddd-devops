@@ -1,3 +1,45 @@
+## [1.2.0](https://github.com/andrea-acampora/nestjs-ddd-devops/compare/1.1.0...1.2.0) (2025-03-14)
+
+### Features
+
+* create mapper interface ([4f517ff](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/4f517ffae6b5b11d8f5c7632ab8e0f5d9540ed68))
+* create pure domain entity ([9804c25](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/9804c250e10322e8fd6d1aae2affaff33d1a7906))
+* create user mapper and refactor code to use new domain entity ([e71e350](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/e71e3505747f47eae229ce2e3b21f9c6ea5fc9fe))
+
+### Dependency updates
+
+* **deps:** update dependency @types/bcryptjs to v3 ([#119](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/119)) ([75f05e2](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/75f05e2640225d8569606990a6ed77cc87482bb8))
+* **deps:** update dependency @types/node to v22.13.10 ([#113](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/113)) ([d16d71a](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/d16d71a19f2c0a5c687c8ad5e6c77abe747dc2b9))
+* **deps:** update dependency @types/node to v22.13.9 ([#101](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/101)) ([7e69aad](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/7e69aadd2ed05065dccc23c7108a199c0834336f))
+* **deps:** update dependency effect to v3.13.10 ([#118](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/118)) ([12f6179](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/12f6179c58d510e4ec485adec586623531e8ba85))
+* **deps:** update dependency effect to v3.13.6 ([#102](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/102)) ([00016ec](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/00016ec000daeaac75737780e0f6beb1e678ce64))
+* **deps:** update dependency effect to v3.13.7 ([#107](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/107)) ([cf5d0eb](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/cf5d0eb4b2d06edd76e1f11eaca8b9e3d1ff5c9a))
+* **deps:** update dependency effect to v3.13.8 ([#115](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/115)) ([52ff535](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/52ff535ad6910c7a334f05d845e991abe360731b))
+* **deps:** update dependency effect to v3.13.9 ([#117](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/117)) ([d37d622](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/d37d622d53784c973b81256538421f67d24519d5))
+* **deps:** update dependency eslint to v9.22.0 ([#112](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/112)) ([217b1d3](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/217b1d3f3997ce97cbca5cba6f50d88192abf7b2))
+* **deps:** update dependency eslint-config-prettier to v10.1.1 ([#111](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/111)) ([3156dc2](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/3156dc219cebcae555eaf65fbc73fa1e8a807f8b))
+* **deps:** update dependency lefthook to v1.11.3 ([#109](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/109)) ([076c558](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/076c5581029f25a77b28459434ba896838afdbd1))
+* **deps:** update dependency typescript to v5.8.2 ([#105](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/105)) ([42e6d6a](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/42e6d6a3425a49eba2f2b898fb7c1ab20f876c7c))
+* **deps:** update mikro-orm monorepo to v6.4.8 ([#106](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/106)) ([c7116f8](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/c7116f83f83bcc156dbeb97d1b83dd607133d2d6))
+* **deps:** update mikro-orm monorepo to v6.4.9 ([#110](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/110)) ([5cb369e](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/5cb369eaeae7eed795ce32ca8d1cd18c263a58ed))
+* **deps:** update nest monorepo ([#100](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/100)) ([1916dd1](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/1916dd1f9e1efedcde7420030cd121fd63a094f5))
+* **deps:** update typescript-eslint monorepo to v8.26.0 ([#103](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/103)) ([028a936](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/028a936ddeb1e2c0625154d17175772cbfda0cc6))
+* **deps:** update typescript-eslint monorepo to v8.26.1 ([#116](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/116)) ([2ceb2c5](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/2ceb2c51ca35385d9824914e0ebff4d10814e914))
+
+### General maintenance
+
+* add communication module and database migrations ([2e19bab](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/2e19babd402eb1aeba461c26e074b653abf5c1a7))
+* add refresh token endpoint ([df1f4f6](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/df1f4f690c8efdf441259245d74e96316da32c53))
+* create handlers ([88884f0](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/88884f03241e702974e2d0131cdcd6fff45291f6))
+* disable healthcheck memory check ([397bad2](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/397bad26b1b19c778cece9e72d49e6db7ecf870e))
+* implement api for retrieving users ([5dad820](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/5dad8208cbdaa12e1b93a777474ed235974520b7))
+* implement create user use case ([81a6459](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/81a64596c39918e139e89d8fee3a8f27edd5e5ba))
+* **test:** add user tests ([6efb8a1](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/6efb8a1807619ca8c20805cf6a5f104cf1c69dac))
+
+### Refactoring
+
+* update auth e2e tests ([b00cdca](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/b00cdcaf28989ce580275b55278ef04f4904b528))
+
 ## [1.1.0](https://github.com/andrea-acampora/nestjs-ddd-devops/compare/1.0.0...1.1.0) (2025-03-03)
 
 ### Features
