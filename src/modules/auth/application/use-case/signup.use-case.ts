@@ -6,9 +6,9 @@ import { AuthUser } from '../../api/presentation/dto/auth-user.dto';
 import { SignupBody } from '../../api/presentation/body/signup.body';
 import { RegisterUserCommand } from '../command/register-user.command';
 import { GetAuthUserByEmailQuery } from '../query/get-auth-user-by-email.query';
-import { User } from '../../../user/domain/entity/user.entity';
 import { CustomConflictException } from '../../../../libs/exceptions/custom-conflict.exception';
 import { CreatedUserEvent } from '../event/created-user.event';
+import { User } from '../../../user/domain/entity/user.entity';
 
 @Injectable()
 export class SignupUseCase implements UseCase<SignupBody, Option<AuthUser>> {
@@ -22,7 +22,8 @@ export class SignupUseCase implements UseCase<SignupBody, Option<AuthUser>> {
     const found: Option<User> = await this.queryBus.execute(
       new GetAuthUserByEmailQuery(body.email),
     );
-    if (isSome(found)) throw new CustomConflictException(found.value.email);
+    if (isSome(found))
+      throw new CustomConflictException(found.value.props.email);
     return map(
       await this.commandBus.execute(
         new RegisterUserCommand(
@@ -34,8 +35,8 @@ export class SignupUseCase implements UseCase<SignupBody, Option<AuthUser>> {
       ),
       (user: User) => ({
         id: user.id,
-        email: user.email,
-        role: user.role,
+        email: user.props.email,
+        role: user.props.role,
       }),
     ).pipe((authUser: Option<AuthUser>) => {
       if (isSome(authUser))
