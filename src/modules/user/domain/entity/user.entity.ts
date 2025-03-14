@@ -1,36 +1,23 @@
-import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 } from 'uuid';
-import { UserRole } from '../value-object/user-role.enum';
-import { UserState } from '../value-object/user-state.enum';
+import { UserProps } from '../data/user.props';
 
-@Entity({
-  tableName: 'users',
-})
 export class User {
-  @PrimaryKey()
-  id: string = v4();
+  private readonly _id: string;
+  private readonly _props: UserProps;
 
-  @Property({ unique: true, index: true })
-  email!: string;
+  constructor(id: string, props: UserProps) {
+    this._id = id;
+    this._props = {
+      ...props,
+      createdAt: props.createdAt || new Date(),
+      updatedAt: props.updatedAt || new Date(),
+    };
+  }
 
-  @Property()
-  password!: string;
+  get id(): string {
+    return this._id;
+  }
 
-  @Property({ nullable: true })
-  firstName?: string;
-
-  @Property({ nullable: true })
-  lastName?: string;
-
-  @Enum({ items: () => UserRole })
-  role!: UserRole;
-
-  @Enum({ items: () => UserState })
-  state!: UserState;
-
-  @Property({ onCreate: () => new Date() })
-  createdAt: Date = new Date();
-
-  @Property({ onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
+  get props(): UserProps {
+    return this._props;
+  }
 }
