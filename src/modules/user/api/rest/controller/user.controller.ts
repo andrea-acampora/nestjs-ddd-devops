@@ -7,22 +7,22 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { ApiRole } from '../../../../libs/api/api-role.enum';
-import { AuthRoles } from '../../../../libs/decorator/auth.decorator';
-import { CreateUserBody } from '../presentation/body/create-user.body';
+import { ApiRole } from '../../../../../libs/api/api-role.enum';
+import { AuthRoles } from '../../../../../libs/decorator/auth.decorator';
+import { CreateUserBody } from '../body/create-user.body';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateUserCommand } from '../../application/command/create-user.command';
-import { UserRole } from '../../domain/value-object/user-role.enum';
+import { CreateUserCommand } from '../../../application/command/create-user.command';
+import { UserRole } from '../../../domain/value-object/user-role.enum';
 import { getOrThrowWith } from 'effect/Option';
 import {
   PaginatedResponse,
   toPaginatedResponse,
-} from '../../../../libs/api/paginated.response.dto';
-import { UserDto } from '../presentation/dto/user.dto';
+} from '../../../../../libs/api/rest/paginated.response.dto';
+import { UserDto } from '../dto/user.dto';
 import { UserParams } from '../params/user.params';
-import { GetAllUsersQuery } from '../../application/query/get-all-users.query';
-import { QueryParams } from '../../../../libs/decorator/query-params.decorator';
-import { QueryParamsValidationPipe } from '../../../../libs/pipe/query-params-validation.pipe';
+import { GetAllUsersQuery } from '../../../application/query/get-all-users.query';
+import { QueryParams } from '../../../../../libs/decorator/query-params.decorator';
+import { QueryParamsValidationPipe } from '../../../../../libs/pipe/query-params-validation.pipe';
 
 @Controller('users')
 export class UserController {

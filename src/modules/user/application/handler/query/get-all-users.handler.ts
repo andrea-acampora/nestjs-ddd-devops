@@ -3,8 +3,8 @@ import { UserRepository } from '../../../domain/repository/user.repository.inter
 import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../../user.tokens';
 import { GetAllUsersQuery } from '../../query/get-all-users.query';
-import { Collection } from '../../../../../libs/api/collection.interface';
-import { UserDto } from '../../../api/presentation/dto/user.dto';
+import { Collection } from '../../../../../libs/api/rest/collection.interface';
+import { UserDto } from '../../../api/rest/dto/user.dto';
 
 @QueryHandler(GetAllUsersQuery)
 export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery> {
@@ -13,8 +13,8 @@ export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery> {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async execute(query: GetAllUsersQuery): Promise<Collection<UserDto>> {
-    const users = await this.userRepository.getAllUsers(query.params);
+  async execute(query?: GetAllUsersQuery): Promise<Collection<UserDto>> {
+    const users = await this.userRepository.getAllUsers(query?.params);
     return {
       items: users.items.map(
         (user): UserDto => ({

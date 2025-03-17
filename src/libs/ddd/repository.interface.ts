@@ -1,5 +1,5 @@
 import { Option } from 'effect/Option';
-import { Collection } from '../api/collection.interface';
+import { Collection } from '../api/rest/collection.interface';
 
 export interface Repository<T> {
   findById(id: number): Promise<Option<T>>;

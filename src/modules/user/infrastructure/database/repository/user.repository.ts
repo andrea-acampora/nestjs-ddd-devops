@@ -3,10 +3,10 @@ import { UserRepository } from '../../../domain/repository/user.repository.inter
 import { UserState } from '../../../domain/value-object/user-state.enum';
 import { EntityRepository, QueryBuilder } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { Collection } from '../../../../../libs/api/collection.interface';
-import { UserParams } from '../../../api/params/user.params';
+import { Collection } from '../../../../../libs/api/rest/collection.interface';
+import { UserParams } from '../../../api/rest/params/user.params';
 import { endOfDay, startOfDay } from 'date-fns';
-import { SortingType } from '../../../../../libs/api/sorting-type.enum';
+import { SortingType } from '../../../../../libs/api/rest/sorting-type.enum';
 import { UserSchema } from '../schema/user.schema';
 import { User } from '../../../domain/entity/user.entity';
 import { UserProps } from '../../../domain/data/user.props';
@@ -18,9 +18,17 @@ export class UserRepositoryImpl implements UserRepository {
     private readonly mikroOrmRepository: EntityRepository<UserSchema>,
     private readonly mapper: UserMapper,
   ) {}
+
   async getUserByEmail(email: string): Promise<Option<User>> {
     return map(
       fromNullable(await this.mikroOrmRepository.findOne({ email })),
+      this.mapper.toDomain,
+    );
+  }
+
+  async getUserById(id: string): Promise<Option<User>> {
+    return map(
+      fromNullable(await this.mikroOrmRepository.findOne({ id })),
       this.mapper.toDomain,
     );
   }
