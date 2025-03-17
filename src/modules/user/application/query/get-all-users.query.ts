@@ -1,5 +1,5 @@
-import { UserParams } from '../../api/params/user.params';
+import { UserParams } from '../../api/rest/params/user.params';
 
 export class GetAllUsersQuery {
-  constructor(readonly params: UserParams) {}
+  constructor(readonly params?: UserParams) {}
 }

@@ -1,7 +1,7 @@
 import { EntityManager, EntityRepository, FilterQuery } from '@mikro-orm/core';
-import { Option, fromNullable, getOrThrowWith } from 'effect/Option';
+import { fromNullable, getOrThrowWith, Option } from 'effect/Option';
 import { Repository } from './repository.interface';
-import { Collection } from '../api/collection.interface';
+import { Collection } from '../api/rest/collection.interface';
 import { BaseEntity } from './base-entity.interface';
 
 export abstract class MikroOrmRepository<T extends BaseEntity>

@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional } from 'class-validator';
-import { SortingType } from '../../../../libs/api/sorting-type.enum';
+import { SortingType } from '../../../../../libs/api/rest/sorting-type.enum';
 import { Type } from 'class-transformer';
 
 export class UserSortParams {

@@ -1,6 +1,6 @@
 import { Option } from 'effect/Option';
-import { Collection } from '../../../../libs/api/collection.interface';
-import { PaginatedQueryParams } from '../../../../libs/api/paginated-query-params.dto';
+import { Collection } from '../../../../libs/api/rest/collection.interface';
+import { PaginatedQueryParams } from '../../../../libs/api/rest/paginated-query-params.dto';
 import { User } from '../entity/user.entity';
 import { UserProps } from '../data/user.props';
 
@@ -9,9 +9,11 @@ export interface UserRepository {
 
   getUserByEmail(email: string): Promise<Option<User>>;
 
+  getUserById(id: string): Promise<Option<User>>;
+
   checkActiveUserById(id: string): Promise<boolean>;
 
   getAllUsers<T extends PaginatedQueryParams>(
-    params: T,
+    params?: T,
   ): Promise<Collection<User>>;
 }

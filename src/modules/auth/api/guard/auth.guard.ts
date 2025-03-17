@@ -16,6 +16,7 @@ import {
   IS_PUBLIC_API,
 } from '../../../../libs/decorator/auth.decorator';
 import { ApiRole } from '../../../../libs/api/api-role.enum';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -38,7 +39,13 @@ export class AuthGuard implements CanActivate {
       context.getClass(),
     ]);
     if (isPublic && !apiRoles) return true;
-    const request = context.switchToHttp().getRequest<FastifyRequest>();
+    let request: FastifyRequest;
+    if (context.getType().toString() === 'graphql') {
+      const gqlContext = GqlExecutionContext.create(context);
+      request = gqlContext.getContext().req;
+    } else {
+      request = context.switchToHttp().getRequest<FastifyRequest>();
+    }
     const token = this.extractToken(request);
     if (isNone(token)) return false;
     try {

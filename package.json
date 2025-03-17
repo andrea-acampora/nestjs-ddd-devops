@@ -25,6 +25,8 @@
     "migrate:down": "npm run build && npx mikro-orm migration:down --config --config src/config/database/mikro-orm.config.ts"
   },
   "dependencies": {
+    "@apollo/server": "^4.11.3",
+    "@as-integrations/fastify": "^2.1.1",
     "@eslint/eslintrc": "^3.2.0",
     "@fastify/compress": "^8.0.1",
     "@fastify/static": "^8.0.4",
@@ -32,6 +34,7 @@
     "@mikro-orm/migrations": "^6.4.3",
     "@mikro-orm/nestjs": "^6.0.2",
     "@mikro-orm/postgresql": "^6.4.3",
+    "@nestjs/apollo": "^13.0.3",
     "@nestjs/axios": "^4.0.0",
     "@nestjs/cache-manager": "^3.0.0",
     "@nestjs/common": "^11.0.0",
@@ -39,6 +42,7 @@
     "@nestjs/core": "^11.0.0",
     "@nestjs/cqrs": "^11.0.2",
     "@nestjs/event-emitter": "^3.0.0",
+    "@nestjs/graphql": "^13.0.3",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/platform-fastify": "^11.0.0",
     "@nestjs/schedule": "^5.0.0",
@@ -50,6 +54,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "effect": "^3.12.4",
+    "graphql": "^16.10.0",
     "jsonwebtoken": "^9.0.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
