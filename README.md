@@ -68,6 +68,7 @@ In the following chapters you will find a description of the main choices, techn
   - [Tactical Design](#tactical-design)
 - [Clean Architecture](#clean-architecture)
 - [Testing](#testing)
+- [GraphQL](#graphql)
 - [Functional Programming](#functional-programming)
 - [Workflow Organization](#workflow-organization)
 - [Semantic Versioning](#semantic-versioning)
@@ -401,6 +402,78 @@ _E2E tests_ will be run with this command:
 npm run test:e2e
 
 ```
+
+---
+
+### GraphQL
+
+
+GraphQL is a *query language* for APIs that allows clients to request only the data they need. Unlike REST, which relies on fixed endpoints and multiple requests, GraphQL consolidates requests into a single query, reducing network overhead and improving efficiency.
+
+When integrating GraphQL with NestJS, it is possible to define schemas using two approaches:
+1. **Schema-First** (SDL-Based) \
+   The Schema Definition Language (SDL) approach follows a traditional GraphQL method where the schema is written in a `.graphql` file and then mapped to resolvers in the application.
+2. **Code-First** (Decorator-Based) \
+   The Code-First approach uses TypeScript decorators to define GraphQL types and resolvers, which NestJS automatically converts into a GraphQL schema.
+
+In this project we will use the **Code-First** approach:
+
+```typescript
+@ObjectType()
+export class UserModel {
+    @Field(() => String)
+    readonly id!: string;
+
+    @Field({ nullable: true })
+    readonly firstName?: string;
+
+    @Field({ nullable: true })
+    readonly lastName?: string;
+
+    @Field(() => String)
+    readonly email!: string;
+
+    @Field(() => Date, { nullable: true })
+    readonly createdAt?: Date;
+}
+```
+
+At this point, we've defined the objects (type definitions) that can exist in our data graph, but clients don't yet have a way to interact with those objects.
+To address that, we need to create a resolver class. In the code first method, a resolver class both defines resolver functions and generates the Query type.
+
+```typescript
+@Resolver(() => UserModel)
+export class UserResolver {
+    constructor(
+        private readonly queryBus: QueryBus,
+        private readonly commandBus: CommandBus,
+    ) {
+    }
+
+    @AuthRoles(ApiRole.ADMIN)
+    @Query(() => UserModel, {})
+    async getUser(
+        @Args('id', { type: () => String }) id: string,
+    ): Promise<UserModel> {
+        return getOrThrowWith(
+            map(await this.queryBus.execute(new GetUserByIdQuery(id)), toUserModel),
+            () =>
+                new GraphQLException('User Not Found', {
+                    extensions: {
+                        http: {
+                            status: HttpStatus.NOT_FOUND,
+                        },
+                    },
+                }),
+        );
+    }
+
+}
+
+```
+
+If you want to deep dive and to understand in detail how GraphQL works, please refer to the official [documentation](https://docs.nestjs.com/graphql/quick-start).
+
 
 ---
 
