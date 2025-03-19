@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiRole } from '../../../../../libs/api/api-role.enum';
 import { AuthRoles } from '../../../../../libs/decorator/auth.decorator';
-import { CreateUserBody } from '../body/create-user.body';
+import { CreateUserBody } from '../presentation/body/create-user.body';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../../../application/command/create-user.command';
 import { UserRole } from '../../../domain/value-object/user-role.enum';
@@ -18,11 +18,13 @@ import {
   PaginatedResponse,
   toPaginatedResponse,
 } from '../../../../../libs/api/rest/paginated.response.dto';
-import { UserDto } from '../dto/user.dto';
-import { UserParams } from '../params/user.params';
+import { toUserDto, UserDto } from '../presentation/dto/user.dto';
+import { UserParams } from '../presentation/params/user.params';
 import { GetAllUsersQuery } from '../../../application/query/get-all-users.query';
 import { QueryParams } from '../../../../../libs/decorator/query-params.decorator';
 import { QueryParamsValidationPipe } from '../../../../../libs/pipe/query-params-validation.pipe';
+import { Collection } from '../../../../../libs/api/rest/collection.interface';
+import { User } from '../../../domain/entity/user.entity';
 
 @Controller('users')
 export class UserController {
@@ -60,8 +62,14 @@ export class UserController {
   async getUsers(
     @QueryParams(new QueryParamsValidationPipe()) params: UserParams,
   ): Promise<PaginatedResponse<UserDto>> {
+    const users: Collection<User> = await this.queryBus.execute(
+      new GetAllUsersQuery(params),
+    );
     return toPaginatedResponse(
-      await this.queryBus.execute(new GetAllUsersQuery(params)),
+      {
+        items: users.items.map(toUserDto),
+        total: users.total,
+      },
       params.offset,
       params.limit,
     );

@@ -1,11 +1,11 @@
 import { UseCase } from '../../../../libs/ddd/use-case.interface';
-import { LoginBody } from '../../api/presentation/body/login.body';
+import { LoginBody } from '../../api/rest/presentation/body/login.body';
 import { fromNullable, isNone, none, Option } from 'effect/Option';
 import { QueryBus } from '@nestjs/cqrs';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserState } from '../../../user/domain/value-object/user-state.enum';
 import { compare } from 'bcryptjs';
-import { AuthUser } from '../../api/presentation/dto/auth-user.dto';
+import { AuthUser } from '../../api/rest/presentation/dto/auth-user.dto';
 import { GetAuthUserByEmailQuery } from '../query/get-auth-user-by-email.query';
 import { User } from '../../../user/domain/entity/user.entity';
 

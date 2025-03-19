@@ -4,7 +4,7 @@ import { Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../../user.tokens';
 import { GetAllUsersQuery } from '../../query/get-all-users.query';
 import { Collection } from '../../../../../libs/api/rest/collection.interface';
-import { UserDto } from '../../../api/rest/dto/user.dto';
+import { User } from '../../../domain/entity/user.entity';
 
 @QueryHandler(GetAllUsersQuery)
 export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery> {
@@ -13,19 +13,7 @@ export class GetAllUsersHandler implements IQueryHandler<GetAllUsersQuery> {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async execute(query?: GetAllUsersQuery): Promise<Collection<UserDto>> {
-    const users = await this.userRepository.getAllUsers(query?.params);
-    return {
-      items: users.items.map(
-        (user): UserDto => ({
-          email: user.props.email,
-          id: user.id,
-          firstName: user.props.firstName,
-          lastName: user.props.lastName,
-          createdAt: user.props.createdAt,
-        }),
-      ),
-      total: users.total,
-    };
+  async execute(query?: GetAllUsersQuery): Promise<Collection<User>> {
+    return await this.userRepository.getAllUsers(query?.params);
   }
 }

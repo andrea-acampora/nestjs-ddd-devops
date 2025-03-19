@@ -5,7 +5,6 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
-import { JwtService } from '../../infrastructure/jwt/jwt.service';
 import { Reflector } from '@nestjs/core';
 import { JWT_AUTH_SERVICE } from '../../auth.tokens';
 import { isNone, none, Option, some } from 'effect/Option';
@@ -17,6 +16,7 @@ import {
 } from '../../../../libs/decorator/auth.decorator';
 import { ApiRole } from '../../../../libs/api/api-role.enum';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { JwtAuthService } from '../../application/service/jwt-auth-service.interface';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     @Inject(JWT_AUTH_SERVICE)
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtAuthService,
     private readonly queryBus: QueryBus,
   ) {}
 

@@ -2,7 +2,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { MikroORM } from '@mikro-orm/core';
 import { initializeApp, resetDatabase } from '../util/setup-e2e-test.util';
 import * as request from 'supertest';
-import { CreateUserBody } from '../../../src/modules/user/api/rest/body/create-user.body';
+import { CreateUserBody } from '../../../src/modules/user/api/rest/presentation/body/create-user.body';
 
 describe('User (E2E)', () => {
   let app: INestApplication;

@@ -1,5 +1,5 @@
 import { DomainEvent } from '../../../../libs/ddd/domain-event.abstract';
-import { AuthUser } from '../../api/presentation/dto/auth-user.dto';
+import { AuthUser } from '../../api/rest/presentation/dto/auth-user.dto';
 
 export class CreatedUserEvent extends DomainEvent<AuthUser> {
   constructor(

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtService } from './infrastructure/jwt/jwt.service';
 import { AuthGuard } from './api/guard/auth.guard';
-import { AuthController } from './api/controller/auth.controller';
+import { AuthController } from './api/rest/controller/auth.controller';
 import {
   JWT_AUTH_SERVICE,
   LOGIN_USE_CASE,

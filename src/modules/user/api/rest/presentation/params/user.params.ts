@@ -1,4 +1,4 @@
-import { PaginatedQueryParams } from '../../../../../libs/api/rest/paginated-query-params.dto';
+import { PaginatedQueryParams } from '../../../../../../libs/api/rest/paginated-query-params.dto';
 import { UserFilterParams } from './user-filter.params';
 import { Type } from 'class-transformer';
 import { IsOptional, ValidateNested } from 'class-validator';
