@@ -4,7 +4,7 @@ import { UserState } from '../../../domain/value-object/user-state.enum';
 import { EntityRepository, QueryBuilder } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Collection } from '../../../../../libs/api/rest/collection.interface';
-import { UserParams } from '../../../api/rest/params/user.params';
+import { UserParams } from '../../../api/rest/presentation/params/user.params';
 import { endOfDay, startOfDay } from 'date-fns';
 import { SortingType } from '../../../../../libs/api/rest/sorting-type.enum';
 import { UserSchema } from '../schema/user.schema';

@@ -1,6 +1,6 @@
 import { Option } from 'effect/Option';
-import { AuthUser } from '../../api/presentation/dto/auth-user.dto';
-import { JwtUser } from '../../api/presentation/dto/jwt-user.dto';
+import { AuthUser } from '../../api/rest/presentation/dto/auth-user.dto';
+import { JwtUser } from '../../api/rest/presentation/dto/jwt-user.dto';
 
 export interface JwtAuthService {
   verifyToken(token: string): Promise<Option<AuthUser>>;

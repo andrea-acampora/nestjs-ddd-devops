@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TerminusModule } from '@nestjs/terminus';
-import { HealthController } from './api/controller/health.controller';
+import { HealthController } from './api/rest/controller/health.controller';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({

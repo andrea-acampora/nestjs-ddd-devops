@@ -6,7 +6,7 @@ import {
   HttpHealthIndicator,
   MikroOrmHealthIndicator,
 } from '@nestjs/terminus';
-import { PublicApi } from '../../../../libs/decorator/auth.decorator';
+import { PublicApi } from '../../../../../libs/decorator/auth.decorator';
 
 @Controller({
   path: 'health',

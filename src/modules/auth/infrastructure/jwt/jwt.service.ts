@@ -10,8 +10,8 @@ import { isNone, liftThrowable, Option } from 'effect/Option';
 import { JwtAuthService } from '../../application/service/jwt-auth-service.interface';
 import * as jwt from 'jsonwebtoken';
 import { getConfigValue } from '../../../../libs/util/config.util';
-import { AuthUser } from '../../api/presentation/dto/auth-user.dto';
-import { JwtUser } from '../../api/presentation/dto/jwt-user.dto';
+import { AuthUser } from '../../api/rest/presentation/dto/auth-user.dto';
+import { JwtUser } from '../../api/rest/presentation/dto/jwt-user.dto';
 
 @Injectable()
 export class JwtService implements JwtAuthService {

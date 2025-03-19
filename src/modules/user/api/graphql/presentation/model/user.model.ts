@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { User } from '../../../../domain/entity/user.entity';
 
 @ObjectType()
 export class UserModel {
@@ -17,3 +18,11 @@ export class UserModel {
   @Field(() => Date, { nullable: true })
   readonly createdAt?: Date;
 }
+
+export const toUserModel = (user: User): UserModel => ({
+  id: user.id,
+  firstName: user.props.firstName,
+  lastName: user.props.lastName,
+  email: user.props.email,
+  createdAt: user.props.createdAt,
+});
