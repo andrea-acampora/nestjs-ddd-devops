@@ -1,23 +1,30 @@
-import { UserProps } from '../data/user.props';
+import { AggregateRoot } from '@nestjs/cqrs';
+import { UserRole } from '../value-object/user-role.enum';
+import { UserState } from '../value-object/user-state.enum';
+import { CreatedUserEvent } from '../event/created-user.event';
 
-export class User {
-  private readonly _id: string;
-  private readonly _props: UserProps;
+export interface UserProps {
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  role: UserRole;
+  state: UserState;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export class User extends AggregateRoot {
+  id: string;
+  props: UserProps;
 
   constructor(id: string, props: UserProps) {
-    this._id = id;
-    this._props = {
-      ...props,
-      createdAt: props.createdAt || new Date(),
-      updatedAt: props.updatedAt || new Date(),
-    };
+    super();
+    this.id = id;
+    this.props = props;
   }
 
-  get id(): string {
-    return this._id;
-  }
-
-  get props(): UserProps {
-    return this._props;
+  create() {
+    this.apply(new CreatedUserEvent(this));
   }
 }

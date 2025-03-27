@@ -7,15 +7,15 @@ import { Collection } from '../../../../../libs/api/rest/collection.interface';
 import { UserParams } from '../../../api/rest/presentation/params/user.params';
 import { endOfDay, startOfDay } from 'date-fns';
 import { SortingType } from '../../../../../libs/api/rest/sorting-type.enum';
-import { UserSchema } from '../schema/user.schema';
-import { User } from '../../../domain/entity/user.entity';
-import { UserProps } from '../../../domain/data/user.props';
+import { User, UserProps } from '../../../domain/entity/user.entity';
 import { UserMapper } from '../mapper/user.mapper';
+import { UserEntity } from '../entity/user.entity';
+import { pipe } from 'effect';
 
 export class UserRepositoryImpl implements UserRepository {
   constructor(
-    @InjectRepository(UserSchema)
-    private readonly mikroOrmRepository: EntityRepository<UserSchema>,
+    @InjectRepository(UserEntity)
+    private readonly mikroOrmRepository: EntityRepository<UserEntity>,
     private readonly mapper: UserMapper,
   ) {}
 
@@ -53,7 +53,10 @@ export class UserRepositoryImpl implements UserRepository {
       updatedAt: new Date(),
     });
     await this.mikroOrmRepository.insert(entity);
-    return map(fromNullable(entity), this.mapper.toDomain);
+    return pipe(map(fromNullable(entity), this.mapper.toDomain), (user) => {
+      if (isSome(user)) user.value.create();
+      return user;
+    });
   }
 
   async getAllUsers(params?: UserParams): Promise<Collection<User>> {
@@ -67,7 +70,7 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   private applyFilters(
-    queryBuilder: QueryBuilder<UserSchema>,
+    queryBuilder: QueryBuilder<UserEntity>,
     params: UserParams,
   ) {
     const filters = [

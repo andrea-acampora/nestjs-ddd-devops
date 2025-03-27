@@ -28,7 +28,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     } else {
       const response = httpHost.getResponse();
       const status = exception.getStatus();
-      console.log(response);
       const request = httpHost.getRequest();
       response.code(status).send({
         statusCode: status,

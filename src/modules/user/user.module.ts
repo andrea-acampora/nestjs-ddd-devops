@@ -9,13 +9,13 @@ import { UserController } from './api/rest/controller/user.controller';
 import { CreateUserUseCase } from './application/use-case/create-user.use-case';
 import { CreateUserHandler } from './application/handler/command/create-user.handler';
 import { GetAllUsersHandler } from './application/handler/query/get-all-users.handler';
-import { UserSchema } from './infrastructure/database/schema/user.schema';
 import { UserMapper } from './infrastructure/database/mapper/user.mapper';
 import { UserResolver } from './api/graphql/resolver/user.resolver';
 import { GetUserByIdHandler } from './application/handler/query/get-user-by-id.handler';
+import { UserEntity } from './infrastructure/database/entity/user.entity';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([UserSchema])],
+  imports: [MikroOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [
     RegisterUserHandler,

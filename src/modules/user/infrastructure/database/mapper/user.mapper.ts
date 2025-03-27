@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Mapper } from '../../../../../libs/ddd/mapper.interface';
 import { User } from '../../../domain/entity/user.entity';
-import { UserSchema } from '../schema/user.schema';
+import { UserEntity } from '../entity/user.entity';
 
 @Injectable()
-export class UserMapper implements Mapper<User, UserSchema> {
-  toDomain(record: UserSchema): User {
+export class UserMapper implements Mapper<User, UserEntity> {
+  toDomain(record: UserEntity): User {
     return new User(record.id, {
       email: record.email,
       password: record.password,
@@ -18,7 +18,7 @@ export class UserMapper implements Mapper<User, UserSchema> {
     });
   }
 
-  toPersistence(entity: User): UserSchema {
+  toPersistence(entity: User): UserEntity {
     const props = entity.props;
     return {
       id: entity.id,
@@ -30,6 +30,6 @@ export class UserMapper implements Mapper<User, UserSchema> {
       state: props.state,
       createdAt: props.createdAt,
       updatedAt: props.updatedAt,
-    } as UserSchema;
+    } as UserEntity;
   }
 }

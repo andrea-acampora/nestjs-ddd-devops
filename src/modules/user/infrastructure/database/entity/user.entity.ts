@@ -2,13 +2,14 @@ import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { UserRole } from '../../../domain/value-object/user-role.enum';
 import { UserState } from '../../../domain/value-object/user-state.enum';
+import { BaseEntity } from '../../../../../libs/database/base.entity';
 
 @Entity({
   tableName: 'users',
 })
-export class UserSchema {
+export class UserEntity extends BaseEntity {
   @PrimaryKey()
-  id: string = v4();
+  override id: string = v4();
 
   @Property({ unique: true, index: true })
   email!: string;
@@ -27,10 +28,4 @@ export class UserSchema {
 
   @Enum({ items: () => UserState })
   state!: UserState;
-
-  @Property({ onCreate: () => new Date() })
-  createdAt: Date = new Date();
-
-  @Property({ onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
 }
