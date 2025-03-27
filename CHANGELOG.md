@@ -1,3 +1,21 @@
+## [1.3.0](https://github.com/andrea-acampora/nestjs-ddd-devops/compare/1.2.0...1.3.0) (2025-03-27)
+
+### Features
+
+* create aggregate root and update dispatch event logic ([99789a9](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/99789a97abfae6fea5f59932bfa8eed2e1663b1b))
+
+### Dependency updates
+
+* **deps:** update dependency effect to v3.13.11 ([#122](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/122)) ([fd7a211](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/fd7a2116d75dd2acb71b6ddef98dcca38e8cbf9a))
+* **deps:** update dependency effect to v3.13.12 ([#125](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/125)) ([6ae779c](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/6ae779c654bb4455e0c25be737dcd1ed7e071ec4))
+* **deps:** update mikro-orm monorepo to v6.4.10 ([#123](https://github.com/andrea-acampora/nestjs-ddd-devops/issues/123)) ([7ea276a](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/7ea276a60219995a0399414a70da79c308ac4bfe))
+
+### General maintenance
+
+* add get users graphql query and create user mutation ([8829990](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/882999068296c1eb34cca1319a3ddd8fe631a35b))
+* add graphql dependencies and create user resolver ([28e8db9](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/28e8db98eb51022fcccb4edf4b5b4f95bb552696))
+* add graphql documentation ([d1d46c1](https://github.com/andrea-acampora/nestjs-ddd-devops/commit/d1d46c1bea7b1f1a782b12697cd67ad4d79bc1e2))
+
 ## [1.2.0](https://github.com/andrea-acampora/nestjs-ddd-devops/compare/1.1.0...1.2.0) (2025-03-14)
 
 ### Features
