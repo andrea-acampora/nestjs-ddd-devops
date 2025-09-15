@@ -1,8 +1,13 @@
 import { Config } from 'jest';
-import baseConfig from './jest.config.base';
 
 const e2eConfig: Config = {
-  ...baseConfig,
+  rootDir: '../',
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.(t|j)s$': 'ts-jest',
+  },
+  setupFiles: ['./config/jest.setup.ts'],
   testRegex: '.e2e-spec.ts$',
 };
 

@@ -1,8 +1,13 @@
 import { Config } from 'jest';
-import baseConfig from './jest.config.base';
 
 const unitConfig: Config = {
-  ...baseConfig,
+  rootDir: '../',
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.(t|j)s$': 'ts-jest',
+  },
+  setupFiles: ['./config/jest.setup.ts'],
   testRegex: '.*\\.spec\\.ts$',
   coverageDirectory: '../coverage',
   collectCoverageFrom: ['**/*.(t|j)s'],
