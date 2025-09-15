@@ -1,5 +1,3 @@
-import { v4 } from 'uuid';
-
 export abstract class DomainEvent<T> {
   public readonly eventId: string;
   public readonly name: string;
@@ -9,11 +7,12 @@ export abstract class DomainEvent<T> {
   public readonly version: number;
 
   protected constructor(
+    eventId: string,
     name: string,
     payload: T,
     options: { correlationId?: string; version?: number } = {},
   ) {
-    this.eventId = v4();
+    this.eventId = eventId;
     this.name = name;
     this.timeStamp = new Date();
     this.payload = payload;
