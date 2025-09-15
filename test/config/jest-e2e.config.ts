@@ -7,6 +7,7 @@ const e2eConfig: Config = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
+  transformIgnorePatterns: ['/node_modules/(?!uuid)/'],
   setupFiles: ['./config/jest.setup.ts'],
   testRegex: '.e2e-spec.ts$',
 };
