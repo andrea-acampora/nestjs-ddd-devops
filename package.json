@@ -74,7 +74,7 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
-    "@types/uuid": "^10.0.0",
+    "@types/uuid": "^11.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0-alpha.10",
     "@typescript-eslint/parser": "^8.0.0-alpha.10",
     "eslint": "^9.0.1",
