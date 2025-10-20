@@ -81,7 +81,7 @@
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "jest": "^30.0.0",
-    "lefthook": "^1.10.7",
+    "lefthook": "^2.0.0",
     "prettier": "^3.4.2",
     "semantic-release-preconfigured-conventional-commits": "1.1.149",
     "source-map-support": "^0.5.21",
